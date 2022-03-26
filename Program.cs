@@ -2,6 +2,8 @@
 namespace Program
 {
     delegate int MathOperation(int a, int b);
+    delegate void ForAnonymousDelegate();
+    delegate int ForAnonymousDelegate2(int a);
     class Operations
     {
         public static int Add(int a, int b)
@@ -77,6 +79,36 @@ namespace Program
             op+=Operations.Divide;
             int result = op(a,b);
             Console.WriteLine("last call result:" + result);
+
+            Console.WriteLine("\n\n=====ANONYMOUS FUNCTIONS WITH DELEGATES====");
+            //anynomous method  (that uses function body instead of reference to a pre defined function)
+            //-------(i)   UNICAST DELEGATE USING ANONYMOUS FUNCTION
+            ForAnonymousDelegate del1 = delegate
+            {
+                Console.WriteLine("Hey! anynomous method there. I am void");
+            };
+            del1();
+
+            ForAnonymousDelegate2 del2 = delegate (int a)
+            {
+                Console.WriteLine("Hey! anynomous method there. I return int and take an int which is: "+ a);
+                return a;
+            };
+            int anonymousResult = del2(5);
+
+            //-------(ii)  MULTICAST DELEGATE USING ANONYMOUS FUNCTION
+
+            ForAnonymousDelegate Multidel = delegate
+            {
+                Console.WriteLine("Hey! anynomous method there. I am first reference to it");
+            };
+            Multidel += delegate
+            {
+                Console.WriteLine("Hey! anynomous method there.  I am second reference to it");
+            };
+            Multidel();
+
+
 
         }
     }
